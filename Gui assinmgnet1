@@ -1,0 +1,56 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class IntegerVerifier extends JFrame implements ActionListener {
+    private JTextField textField;
+    private JLabel messageLabel;
+
+    public IntegerVerifier() {
+        super("Integer Verifier");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 150);
+
+        textField = new JTextField(10);
+        JButton verifyButton = new JButton("Verify");
+        JButton cancelButton = new JButton("Cancel");
+        messageLabel = new JLabel();
+
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new GridLayout(3, 1));
+        JPanel panel1 = new JPanel();
+        panel1.add(new JLabel("Enter an integer value:"));
+        panel1.add(textField);
+        contentPane.add(panel1);
+        JPanel panel2 = new JPanel();
+        panel2.add(verifyButton);
+        panel2.add(cancelButton);
+        contentPane.add(panel2);
+        JPanel panel3 = new JPanel();
+        panel3.add(messageLabel);
+        contentPane.add(panel3);
+
+        verifyButton.addActionListener(this);
+        cancelButton.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        if (command.equals("Verify")) {
+            String input = textField.getText();
+            try {
+                int value = Integer.parseInt(input);
+                messageLabel.setText("The input is an integer.");
+            } catch (NumberFormatException ex) {
+                messageLabel.setText("The input is not an integer.");
+            }
+        } else if (command.equals("Cancel")) {
+            dispose();
+        }
+    }
+
+    public static void main(String[] args) {
+        IntegerVerifier verifier = new IntegerVerifier();
+        verifier.setVisible(true);
+    }
+}
